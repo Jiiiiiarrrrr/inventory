@@ -1,0 +1,396 @@
+/* =====================================================================
+   UX Improvements — Brew & Co. Inventory System
+   Enhanced spacing, accessibility, loading states, and visual hierarchy
+   ===================================================================== */
+
+/* ---- Sidebar scrollbar — invisible by default, appears on hover ---- */
+.sidebar {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0px !important;
+  display: none !important;
+}
+
+.sidebar:hover::-webkit-scrollbar {
+  width: 4px !important;
+  display: block !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent !important;
+  border-radius: 4px !important;
+  transition: background 0.3s ease !important;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+/* ---- Better spacing system ---- */
+:root {
+    --muted: #4a3b2f !important;          /* Better contrast (was #6f6055) */
+    --line: #d4c4b0 !important;           /* Stronger divider (was #eaded0) */
+    --cream-2: #f0e6d8 !important;        /* Slightly darker (was #f6ecdd) */
+}
+
+/* ---- Better table UX ---- */
+table tbody tr {
+    transition: background 0.2s ease !important;
+}
+
+table tbody tr:hover {
+    background: #f5ebe0 !important;
+}
+
+table td, table th {
+    padding: 14px 12px !important;
+    vertical-align: middle !important;
+}
+
+/* ---- Better buttons ---- */
+.btn-primary, button[type="submit"], .btn.ok, .btn.primary {
+    box-shadow: 0 4px 12px rgba(169, 113, 74, 0.25) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease !important;
+    min-height: 44px !important;
+}
+
+.btn-primary:hover, button[type="submit"]:hover, .btn.ok:hover, .btn.primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(169, 113, 74, 0.35) !important;
+}
+
+.btn-primary:active, button[type="submit"]:active {
+    transform: translateY(0) !important;
+}
+
+.btn-primary:disabled, button[type="submit"]:disabled {
+    opacity: 0.7 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* ---- Better pills / badges ---- */
+.pill {
+    padding: 6px 14px !important;
+    font-weight: 700 !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
+}
+
+/* ---- Help text ---- */
+.help-text {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6f6055;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* ---- Info box ---- */
+.info-box {
+    background: linear-gradient(135deg, #e2f0e8, #f0e6d8);
+    border-left: 4px solid #256b4d;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #33261d;
+    line-height: 1.6;
+}
+
+.info-box.warn {
+    background: linear-gradient(135deg, #fdf3e3, #f0e6d8);
+    border-left-color: #96690a;
+}
+
+.info-box.danger {
+    background: linear-gradient(135deg, #fde8e8, #f0e6d8);
+    border-left-color: #a23232;
+}
+
+/* ---- Loading spinner ---- */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---- Form section grouping ---- */
+.form-section {
+    background: var(--cream-2, #f0e6d8);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.form-section h4 {
+    margin: 0 0 14px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #5c3a29;
+}
+
+/* ---- Better empty states ---- */
+.empty-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6f6055;
+}
+
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    stroke: #6f6055;
+    opacity: 0.4;
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #33261d;
+}
+
+.empty-state p {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+/* ---- Activity feed ---- */
+.activity-feed {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(74,47,34,0.08);
+}
+
+.activity-feed h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eaded0;
+    align-items: flex-start;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f6ecdd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-text {
+    font-size: 14px;
+    margin-bottom: 3px;
+    color: #33261d;
+}
+
+.activity-meta {
+    font-size: 12px;
+    color: #6f6055;
+}
+
+/* ---- Collapsible panel ---- */
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eaded0;
+    margin-bottom: 16px;
+}
+
+.panel-header h2 {
+    margin: 0 !important;
+}
+
+.btn-collapse {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6f6055;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.btn-collapse:hover {
+    background: #f6ecdd;
+}
+
+.btn-collapse svg {
+    transition: transform 0.3s;
+}
+
+.btn-collapse.collapsed svg {
+    transform: rotate(-90deg);
+}
+
+.panel.collapsed .panel-body {
+    display: none;
+}
+
+/* ---- Better stat cards ---- */
+.stat {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(74,47,34,0.12) !important;
+}
+
+/* ---- Better nav items ---- */
+.nav a, .sidebar .nav a {
+    transition: transform 0.15s ease, background 0.2s ease !important;
+}
+
+.nav a:hover:not(.active) {
+    transform: translateX(4px);
+}
+
+/* ---- Better input focus ---- */
+input:focus, select:focus, textarea:focus {
+    border-color: #a9714a !important;
+    box-shadow: 0 0 0 3px rgba(169, 113, 74, 0.15) !important;
+    outline: none !important;
+}
+
+/* ---- Toast improvements ---- */
+.toast {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25) !important;
+    font-size: 14px !important;
+    padding: 14px 20px !important;
+}
+
+/* ---- Responsive improvements ---- */
+@media (max-width: 768px) {
+    .stat .v {
+        font-size: 26px !important;
+    }
+    
+    .topbar h1 {
+        font-size: 22px !important;
+    }
+    
+    .panel {
+        padding: 16px !important;
+    }
+    
+    table td, table th {
+        padding: 10px 8px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ---- Modal improvements ---- */
+.modal-bg.show {
+    animation: modalFadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal {
+    animation: modalPopIn 0.25s ease;
+}
+
+@keyframes modalPopIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Notification badge ---- */
+.badge {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ---- Better scrollbars ---- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f6ecdd;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a9714a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8f5c39;
+}
+
+/* ---- Print improvements ---- */
+@media print {
+    .sidebar, .topbar .user-area, .hamburger, .btn, button {
+        display: none !important;
+    }
+    
+    .main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    
+    body {
+        background: #fff !important;
+    }
+    
+    .panel {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+    }
+}
