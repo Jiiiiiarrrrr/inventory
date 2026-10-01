@@ -1,0 +1,207 @@
+/* ========================================================================
+   Brew & Co. responsive foundation — Batch 1
+   Shared desktop, tablet and mobile rules for Inventory, HRMS and POS.
+   This stylesheet is intentionally additive: it normalises layout and touch
+   behaviour without changing module-specific colours or business logic.
+   ======================================================================== */
+
+:root {
+  --bc-safe-x: clamp(14px, 3vw, 32px);
+  --bc-safe-y: clamp(14px, 2.8vw, 30px);
+  --bc-touch-target: 44px;
+  --bc-radius: 12px;
+  --bc-shadow: 0 10px 30px rgba(59, 35, 19, .10);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { max-width: 100%; overflow-x: hidden; }
+body { min-width: 320px; }
+img, svg, video, canvas { max-width: 100%; }
+img { height: auto; }
+button, input, select, textarea { font: inherit; }
+button, a, input, select, textarea, summary { touch-action: manipulation; }
+button, [role="button"], .btn, .btn-primary, .hamburger, .sidebar-toggle { min-height: var(--bc-touch-target); }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-height: var(--bc-touch-target); max-width: 100%; }
+textarea { min-height: 96px; resize: vertical; }
+:focus-visible { outline: 3px solid #a9714a !important; outline-offset: 3px; }
+
+/* Global width protection. Long codes/emails should wrap instead of widening pages. */
+.main, .content, .page-content, .panel, .card, .modal-content, .dialog, .form-section,
+.grid, .grid2, .two-col, .layout, .form-grid, .stats, .stat-row, .topbar { min-width: 0; }
+.break-anywhere, td, .value, .muted, .detail, .text-muted { overflow-wrap: anywhere; }
+
+/* Scrollable tables are preferable to compressed, unreadable mobile columns. */
+.bc-table-scroll,
+.table-wrap,
+.table-responsive,
+.data-table-wrap,
+.sales-table-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: rgba(122, 96, 85, .45) transparent;
+}
+.bc-table-scroll > table { margin-bottom: 0; }
+.bc-table-scroll::after {
+  content: "Swipe to see more";
+  display: none;
+  position: sticky;
+  right: 0;
+  bottom: 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: #7a6055;
+  background: rgba(250, 246, 240, .92);
+}
+
+/* Buttons and compact action rows stay usable when labels become long. */
+.actions, .action-row, .toolbar, .filters, .buttons, .panel-actions,
+.form-actions, .topbar-actions, .quick-actions {
+  min-width: 0;
+}
+.actions > *, .action-row > *, .toolbar > *, .filters > *, .buttons > *,
+.panel-actions > *, .form-actions > *, .topbar-actions > *, .quick-actions > * { min-width: 0; }
+
+/* Mobile backdrop created by responsive-ui.js for older pages without one. */
+.bc-nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: rgba(35, 21, 12, .46);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+}
+.bc-nav-backdrop.is-visible { display: block; }
+.bc-mobile-menu {
+  display: none;
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  z-index: 1002;
+  width: var(--bc-touch-target);
+  height: var(--bc-touch-target);
+  border: 1px solid var(--line, #e8ddd0);
+  border-radius: 11px;
+  background: var(--bg, #faf6f0);
+  color: var(--ink, #3b2313);
+  box-shadow: 0 5px 18px rgba(59,35,19,.15);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Tablet adjustments: preserve information density while preventing overflow. */
+@media (max-width: 1100px) {
+  .main { min-width: 0; }
+  .stats, .stat-row, .summary-cards, .sales-summary-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid, .grid2, .two-col, .layout { min-width: 0; }
+  .items-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Shared mobile application shell. Existing screen-specific rules can continue
+   to customise colours and type; these rules establish safe dimensions. */
+@media (max-width: 820px) {
+  body { min-width: 320px; }
+
+  .sidebar {
+    width: min(86vw, 320px) !important;
+    max-width: calc(100vw - 54px);
+    padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+  .main {
+    width: 100% !important;
+    min-height: 100dvh;
+    height: auto !important;
+    margin-left: 0 !important;
+    padding: var(--bc-safe-y) var(--bc-safe-x) !important;
+    padding-top: max(var(--bc-safe-y), calc(54px + env(safe-area-inset-top))) !important;
+  }
+  .bc-mobile-menu { display: inline-flex; align-items: center; justify-content: center; }
+
+  .topbar, .page-head, .page-header, .section-head, .panel-header {
+    gap: 12px;
+    min-width: 0;
+  }
+  .topbar, .page-head, .page-header, .section-head {
+    flex-wrap: wrap;
+  }
+  .topbar > *, .page-head > *, .page-header > *, .section-head > * { min-width: 0; }
+  .topbar .who, .who { max-width: 100%; }
+
+  .stats, .stat-row, .summary-cards, .sales-summary-cards,
+  .grid, .grid2, .two-col, .layout, .form-grid, .form-row,
+  .calc-box, .preview-body, .info-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .items-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .items-full-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  .panel, .card, .activity-feed, .sales-chart-card, .sales-table-card,
+  .summary-card, .form-section {
+    border-radius: var(--bc-radius);
+  }
+  .panel, .card, .form-section { padding: clamp(14px, 4vw, 20px); }
+
+  .actions, .action-row, .toolbar, .filters, .buttons, .panel-actions,
+  .form-actions, .topbar-actions, .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .actions > *, .action-row > *, .toolbar > *, .filters > *, .buttons > *,
+  .panel-actions > *, .form-actions > *, .topbar-actions > *, .quick-actions > * {
+    flex: 1 1 auto;
+  }
+
+  .modal, .modal-overlay, .dialog-overlay { padding: 12px; align-items: flex-end !important; }
+  .modal-content, .modal-box, .dialog {
+    width: min(100%, 680px) !important;
+    max-width: 100% !important;
+    max-height: min(88dvh, 820px);
+    overflow: auto;
+    border-radius: 16px 16px 12px 12px;
+  }
+
+  .bc-table-scroll::after { display: block; }
+  .bc-table-scroll table,
+  .table-wrap table,
+  .table-responsive table,
+  .data-table-wrap table { min-width: max-content; }
+
+  /* POS: the cart is allowed to take the full width in the small layout. */
+  .category-page { min-height: auto; }
+  .category-main, .items-page-content, .sales-page-content { padding-inline: 0; }
+  .order-sidebar { width: 100%; min-height: auto; }
+  .order-sidebar, .sales-table-card { border-radius: var(--bc-radius); }
+}
+
+@media (max-width: 560px) {
+  :root { --bc-safe-x: 14px; --bc-safe-y: 14px; }
+  h1 { font-size: clamp(22px, 7vw, 30px); }
+  h2 { font-size: clamp(19px, 6vw, 25px); }
+  .items-grid, .items-full-grid { grid-template-columns: 1fr !important; }
+  .stats, .stat-row, .summary-cards, .sales-summary-cards { grid-template-columns: 1fr !important; }
+  .form-row > *, .field-row > * { min-width: 0; }
+  .actions > *, .action-row > *, .toolbar > *, .filters > *, .buttons > *,
+  .panel-actions > *, .form-actions > *, .topbar-actions > *, .quick-actions > * { flex-basis: 100%; }
+  .np-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; width: 100%; }
+  .np-grid button { min-width: 0; }
+  .np-display { min-width: 0; width: 100%; }
+}
+
+/* Honour reduced-motion settings. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+@media print {
+  .bc-mobile-menu, .bc-nav-backdrop { display: none !important; }
+  .main { margin-left: 0 !important; padding: 0 !important; }
+  .bc-table-scroll, .table-wrap, .table-responsive { overflow: visible !important; }
+}

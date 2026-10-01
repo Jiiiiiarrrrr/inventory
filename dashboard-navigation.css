@@ -1,0 +1,243 @@
+/* ========================================================================
+   Brew & Co. dashboard and role navigation — Batch 2
+   A shared polish layer for role-based Inventory, HRMS, Finance and POS views.
+   It works with existing markup and does not modify routes or permissions.
+   ======================================================================== */
+
+:root {
+  --bc-nav-surface: #fffdfa;
+  --bc-nav-tint: #f7efe5;
+  --bc-nav-ink: #3b2313;
+  --bc-nav-muted: #7a6055;
+  --bc-nav-line: #e8ddd0;
+  --bc-nav-accent: #a9714a;
+  --bc-nav-accent-soft: #f1e1cf;
+  --bc-nav-radius: 12px;
+}
+
+/* ---------- Role workspace context ---------- */
+body.bc-role-shell .sidebar {
+  background: linear-gradient(180deg, #fffdfa 0%, #faf6f0 72%, #f5ede3 100%) !important;
+  border-right-color: var(--bc-nav-line) !important;
+}
+
+.bc-workspace-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 8px 14px;
+  padding: 10px 11px;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid var(--bc-nav-line);
+  border-radius: var(--bc-nav-radius);
+  box-shadow: 0 5px 16px rgba(59, 35, 19, .055);
+}
+.bc-workspace-dot {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bc-workspace-color, var(--bc-nav-accent));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--bc-workspace-color, var(--bc-nav-accent)) 14%, transparent);
+}
+.bc-workspace-copy { min-width: 0; display: grid; gap: 1px; }
+.bc-workspace-copy small {
+  overflow: hidden;
+  color: var(--bc-nav-muted);
+  font-size: 9px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bc-workspace-copy strong {
+  overflow: hidden;
+  color: var(--bc-nav-ink);
+  font-size: 12.5px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Existing nav types: Inventory uses .nav while HRMS/POS use .sidebar-nav. */
+body.bc-role-shell .nav,
+body.bc-role-shell .sidebar-nav {
+  padding-bottom: 8px;
+}
+body.bc-role-shell .nav a,
+body.bc-role-shell .sidebar-nav a,
+body.bc-role-shell .sidebar-bottom a {
+  position: relative;
+  min-height: 42px;
+  border: 1px solid transparent;
+}
+body.bc-role-shell .nav a:hover,
+body.bc-role-shell .sidebar-nav a:hover,
+body.bc-role-shell .sidebar-bottom a:hover {
+  background: var(--bc-nav-tint) !important;
+  color: var(--bc-nav-accent) !important;
+}
+body.bc-role-shell .nav a.active,
+body.bc-role-shell .nav a.is-current,
+body.bc-role-shell .sidebar-nav a.active,
+body.bc-role-shell .sidebar-nav a.is-current {
+  border-color: rgba(169, 113, 74, .22);
+  box-shadow: 0 4px 12px rgba(169, 113, 74, .14);
+}
+body.bc-role-shell .nav a.active::before,
+body.bc-role-shell .nav a.is-current::before,
+body.bc-role-shell .sidebar-nav a.active::before,
+body.bc-role-shell .sidebar-nav a.is-current::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 5px 5px 0;
+  background: currentColor;
+}
+body.bc-role-shell .nav-section-label,
+body.bc-role-shell .sidebar-section {
+  display: flex;
+  align-items: center;
+  min-height: 26px;
+  padding-top: 13px;
+  letter-spacing: .12em;
+}
+
+/* ---------- Dashboard hierarchy ---------- */
+body.bc-dashboard-shell .topbar,
+body.bc-dashboard-shell .page-header,
+body.bc-dashboard-shell .page-head {
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(232, 221, 208, .75);
+}
+body.bc-dashboard-shell .topbar h1,
+body.bc-dashboard-shell .page-header h1,
+body.bc-dashboard-shell .page-head h1 {
+  letter-spacing: -.025em;
+}
+body.bc-dashboard-shell .stats,
+body.bc-dashboard-shell .stat-row,
+body.bc-dashboard-shell .sales-summary-cards,
+body.bc-dashboard-shell .summary-cards { gap: clamp(12px, 1.5vw, 18px); }
+body.bc-dashboard-shell .stat,
+body.bc-dashboard-shell .summary-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(232, 221, 208, .95);
+  box-shadow: 0 8px 22px rgba(59, 35, 19, .065);
+}
+body.bc-dashboard-shell .stat::before,
+body.bc-dashboard-shell .summary-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--bc-nav-accent), #d8a066);
+}
+body.bc-dashboard-shell .stat:nth-child(2)::before,
+body.bc-dashboard-shell .summary-card:nth-child(2)::before { background: linear-gradient(90deg, #256b4d, #5ca77a); }
+body.bc-dashboard-shell .stat:nth-child(3)::before,
+body.bc-dashboard-shell .summary-card:nth-child(3)::before { background: linear-gradient(90deg, #8d5a21, #d8a066); }
+body.bc-dashboard-shell .stat:nth-child(4)::before,
+body.bc-dashboard-shell .summary-card:nth-child(4)::before { background: linear-gradient(90deg, #71518e, #aa7bc7); }
+body.bc-dashboard-shell .stat .t,
+body.bc-dashboard-shell .summary-label {
+  display: flex;
+  min-height: 30px;
+  align-items: flex-start;
+  letter-spacing: .025em;
+}
+body.bc-dashboard-shell .stat .v,
+body.bc-dashboard-shell .summary-value {
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+body.bc-dashboard-shell .panel,
+body.bc-dashboard-shell .card,
+body.bc-dashboard-shell .sales-chart-card,
+body.bc-dashboard-shell .sales-table-card {
+  border: 1px solid rgba(232, 221, 208, .92);
+  box-shadow: 0 8px 24px rgba(59, 35, 19, .06);
+}
+body.bc-dashboard-shell .panel > h2:first-child,
+body.bc-dashboard-shell .card > h2:first-child { letter-spacing: -.015em; }
+
+/* A compact, consistent identity treatment in role dashboards. */
+body.bc-dashboard-shell .user-area,
+body.bc-dashboard-shell .who {
+  min-width: 0;
+}
+body.bc-dashboard-shell .who {
+  padding: 4px 10px 4px 4px;
+  border: 1px solid rgba(232, 221, 208, .82);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .66);
+}
+body.bc-dashboard-shell .avatar,
+body.bc-dashboard-shell .sidebar-avatar { box-shadow: 0 3px 10px rgba(169, 113, 74, .24); }
+
+/* ---------- POS app header ---------- */
+body.bc-pos-shell .navbar {
+  padding-inline: clamp(14px, 3vw, 26px);
+  gap: 12px;
+}
+body.bc-pos-shell .nav-links {
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+body.bc-pos-shell .nav-links::-webkit-scrollbar { display: none; }
+body.bc-pos-shell .nav-links a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  white-space: nowrap;
+}
+body.bc-pos-shell .nav-links a.active {
+  background: rgba(255,255,255,.11);
+  color: var(--warm-beige);
+}
+
+/* ---------- Portal ---------- */
+body.bc-portal .portal-header { max-width: 700px; margin-inline: auto; }
+body.bc-portal .portal-subtitle { color: var(--bc-nav-muted); }
+body.bc-portal .portal-card { min-height: 330px; }
+body.bc-portal .portal-card:focus-visible { outline-offset: 5px; }
+
+@media (max-width: 820px) {
+  body.bc-role-shell .sidebar { padding-top: calc(18px + env(safe-area-inset-top)); }
+  body.bc-role-shell .topbar,
+  body.bc-role-shell .page-header,
+  body.bc-role-shell .page-head { padding-bottom: 14px; }
+  body.bc-dashboard-shell .topbar { align-items: flex-start; }
+  body.bc-dashboard-shell .user-area { gap: 8px; }
+  body.bc-dashboard-shell .who { max-width: 100%; }
+  body.bc-dashboard-shell .stat .t,
+  body.bc-dashboard-shell .summary-label { min-height: 0; }
+
+  body.bc-pos-shell .navbar { height: auto; min-height: 60px; flex-wrap: wrap; padding-block: 8px; }
+  body.bc-pos-shell .navbar .logo { order: 1; }
+  body.bc-pos-shell .navbar-right { order: 2; margin-left: auto; }
+  body.bc-pos-shell .nav-links { order: 3; flex-basis: 100%; width: 100%; padding-bottom: 2px; }
+}
+
+@media (max-width: 560px) {
+  .bc-workspace-chip { margin-inline: 4px; }
+  body.bc-dashboard-shell .topbar h1,
+  body.bc-dashboard-shell .page-header h1,
+  body.bc-dashboard-shell .page-head h1 { font-size: 24px; }
+  body.bc-dashboard-shell .stat .v,
+  body.bc-dashboard-shell .summary-value { font-size: clamp(27px, 9vw, 34px); }
+  body.bc-pos-shell .navbar-right .account-btn,
+  body.bc-pos-shell .navbar-right .logout-btn { padding-inline: .65rem; }
+  body.bc-portal .portal-card { min-height: 0; }
+}
